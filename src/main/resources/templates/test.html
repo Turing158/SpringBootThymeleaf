@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="css/test.css">
+    </head>
+    <body>
+        <div class="content" th:if="${session.page == 0}">
+            <h2>Thymeleaf-demo</h2>
+            <h2>请选择示例</h2>
+            <br>
+            <div>
+                <a class="btn p10-20" href="/test1">th:id</a>
+                <a class="btn p10-20" href="/test2">th:if | th:unless</a>
+                <a class="btn p10-20" href="/test3">th:text | th:utext</a>
+                <a class="btn p10-20" href="/test4">th:each</a>
+                <br><br>
+                <a class="btn p10-20" href="/test5">th:value</a>
+                <a class="btn p10-20" href="/test6">th:style</a>
+                <a class="btn p10-20" href="/test7">th:onclick | th:href</a>
+                <a class="btn p10-20" href="/test8">th:switch | th:case</a>
+            </div>
+        </div>
+        <div class="content" th:if="${session.page == 1}">
+            <div>
+                <h1>th:id</h1>
+                <div class="testText" id="colorRed" th:id="'color'+${session.color}">测试文字Test_Text</div>
+                <h4>tips：id为colorRed文字为红色，id为colorBlue文字为蓝色</h4>
+            </div>
+            <br/>
+            <div>
+                <a class="btn p10-20 red" href="/changeIdRed">变红</a>
+                <a class="btn p10-20 blue" href="/changeIdBlue">变蓝</a>
+                <a class="btn p10-20" href="/test">返回</a>
+            </div>
+        </div>
+        <div class="content" th:if="${session.page == 2}">
+            <div>
+                <h1>th:id|th:unless</h1>
+                <div class="testText" th:if="${session.test2Value}">test2Value=True</div>
+                <div class="testText" th:unless="${session.test2Value}">test2Value=False</div>
+                <h4>tips：点击下面切换test2Value的值</h4>
+            </div>
+            <br/>
+            <div>
+                <a class="btn p10-20 blue" th:if="${!session.test2Value}" href="/changeTest2True">True</a>
+                <a class="btn p10-20 red" th:unless="${!session.test2Value}" href="/changeTest2False">False</a>
+                <a class="btn p10-20" href="/test">返回</a>
+            </div>
+        </div>
+        <div class="content" th:if="${session.page == 3}">
+            <div>
+                <h1>th:text|th:utext</h1>
+                <div th:text="${session.test3text}"></div>
+                <br>
+                <h4>你会发现上面与下面的文字很不同，但是是同一个字符串</h4>
+                <br>
+                <div th:utext="${session.test3text}"></div>
+            </div>
+            <br/>
+            <div>
+                <a class="btn p10-20" href="/test">返回</a>
+            </div>
+        </div>
+        <div class="content" th:if="${session.page == 4}">
+            <div>
+                <h1>th:id|th:unless</h1>
+                <div style="position:relative;display: flex;justify-self: center;width: 500px;left: calc(50% - 250px)">
+                    <table>
+                        <tr>
+                            <th>标题</th>
+                            <th>数据</th>
+                            <th>index</th>
+                            <th>count</th>
+                            <th>size</th>
+                            <th>current</th>
+                            <th>even偶</th>
+                            <th>odd奇</th>
+                            <th>first</th>
+                            <th>last</th>
+                        </tr>
+                        <tr th:if="${session.test4Value.isEmpty()}">
+                            <td colspan="10">无数据</td>
+                        </tr>
+                        <tr th:each="value,status:${session.test4Value}">
+                            <td th:text="'测试数据'+${value}">测试数据</td>
+                            <td th:text="${value}">0</td>
+                            <td th:text="${status.index}"></td>
+                            <td th:text="${status.count}"></td>
+                            <td th:text="${status.size}"></td>
+                            <td th:text="${status.current}"></td>
+                            <td th:text="${status.even}"></td>
+                            <td th:text="${status.odd}"></td>
+                            <td th:text="${status.first}"></td>
+                            <td th:text="${status.last}"></td>
+
+                        </tr>
+                    </table>
+                </div>
+                <h4>tips：点击下面增加和减少数据</h4>
+            </div>
+            <br/>
+            <div>
+                <a class="btn p10-20 blue" href="/addTest4">增加一行数据</a>
+                <a class="btn p10-20 red" href="/delTest4">减少一行数据</a>
+                <a class="btn p10-20" href="/test">返回</a>
+            </div>
+        </div>
+        <div class="content" th:if="${session.page == 5}">
+            <div>
+                <h1>th:value</h1>
+                <form method="post" action="/submitTest5">
+                    <input name="value" type="text" th:value="${(session.test5Value == null) ? '' : session.test5Value}"/>
+                    <button class="btn p8-10">保存</button>
+                    <div th:text="'你保存的文字：'+${(session.test5Value == null) ? '' : session.test5Value}"></div>
+                </form>
+                <h4>tips：通过表单发送数据给后端，后端在通过session传输到thymeleaf上处理，最后显示到前端</h4>
+            </div>
+            <br/>
+            <div>
+                <a class="btn p10-20" href="/test">返回</a>
+            </div>
+        </div>
+        <div class="content" th:if="${session.page == 6}">
+            <div>
+                <h1>th:style</h1>
+                <form method="post" action="/submitTest6">
+                    <div class="testText" th:style="'color:'+${(session.test6Color == null) ? 'black' : session.test6Color}+';background-color:'+${(session.test6BgColor == null) ? 'transparent' : session.test6BgColor}">测试文字TestText</div>
+                    <table class="doubleTdLR">
+                        <tr>
+                            <td>color</td>
+                            <td>：<input name="color" type="text" th:value="${(session.test6Color == null) ? 'black' : session.test6Color}"/></td>
+                        </tr>
+                        <tr>
+                            <td>background-color</td>
+                            <td>：<input name="background_color" type="text" th:value="${(session.test6BgColor == null) ? 'transparent' : session.test6BgColor}"/></td>
+                        </tr>
+                    </table>
+                    <button class="btn p8-10">保存</button>
+                </form>
+                <h4>tips：无论怎么刷新，它的样式都还会在</h4>
+            </div>
+            <br/>
+            <div>
+                <a class="btn p10-20" href="/test">返回</a>
+            </div>
+        </div>
+        <div class="content" th:if="${session.page == 7}">
+            <div>
+                <h1>th:onclick | th:href</h1>
+                <form method="post" action="/submitTest7">
+                    <input name="value" type="number" th:value="${(session.test7Value == null) ? '' : session.test7Value}"/>
+                    <button class="btn p8-10">保存</button>
+                </form>
+                <h4>tips：th:onclick不支持字符串，所以这里只演示了数字</h4>
+            </div>
+            <br/>
+            <div>
+                <button class="btn p10-20" th:onclick="'show('+${session.test7Value}+')'">button标签[字符串拼接]</button>
+                <button class="btn p10-20" th:onclick="|show(${session.test7Value})|">button标签[ || 方式]</button>
+                <a class="btn p10-20" th:href="'javascript:show('+${session.test7Value}+')'">a标签</a>
+                <a class="btn p10-20" href="/test">返回</a>
+            </div>
+            <script>
+                function show(value) {
+                    alert(value);
+                }
+            </script>
+        </div>
+        <div class="content" th:if="${session.page == 8}">
+            <div>
+                <h1>th:switch | th:case</h1>
+                <div th:switch="${session.test8Value}">
+                    <p th:case="1">你输入了1</p>
+                    <p th:case="2">你输入了2</p>
+                    <p th:case="3">你输入了3</p>
+                    <p th:case="4">你输入了4</p>
+                    <p th:case="5">你输入了5</p>
+                    <p th:case="*">你输入了其他乱七八糟的数字</p>
+                </div>
+                <form method="post" action="/submitTest8">
+                    <input name="value" type="number" th:value="${(session.test8Value == null) ? 0 : session.test8Value}"/>
+                    <button class="btn p8-10">保存</button>
+                </form>
+                <h4>tips：thymeleaf里的switch没有default，只有th:case="*"</h4>
+            </div>
+            <br/>
+            <div>
+                <a class="btn p10-20" href="/test">返回</a>
+            </div>
+        </div>
+    </body>
+</html>
