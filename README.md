@@ -64,23 +64,23 @@
 
 ------
 
-| 标签                                 | 用途                            | 例子                                                |
-| :----------------------------------- | ------------------------------- | --------------------------------------------------- |
-| [th:id](#th:id)                      | 替换当前标签的id属性            | `<div th:id="'divId' + ${id}"></div>`               |
-| th:if         | 判断事件                        | `<div th:if="${value == 'right'}">show</div>`       |
-| th:unless     | 判断事件[相当于else]            | `<div th:unless="${value == 'error'}">show</div>`   |
-| [th:each](#th:each)                  | 循环事件                        | `<tr th:each="value : ${list}"><td>value</td></tr>` |
-| th:text      | 替换标签内容                    | `<div th:text="${text}">none</div>`                 |
-| th:utext     | 替换标签内容，支持html的文本    | `<div th:utext="${text}">none</div>`                |
-| [th:value](#th:value)                | 替换标签value属性               | `<input th:value="${value}"/>`                      |
-| [th:style](th:style)                 | 设置标签样式                    | `<div th:style="'color:'+${value}">none</div>`      |
-| th:onclick | 设置标签点击事件                | `<div th:onclick="'func('+${value}+')'">none</div>` |
-| th:href    | 设置标签链接                    | `<a th:href="'www.'+${value}"+'.com'>none</a>`      |
-| th:switch   | 分支判断，需要与th:case配合使用 | `<div th:switch="${value}"></div>`                  |
-| th:case     | th:switch的分支                 | `<span th:case="'right'">none</span>`               |
-| th:src                               | 设置img标签的图片路径           | `<img th:src="'./fold/'+${value}"/>`                |
-| th:action                            | 替换表单的action属性            | `<form th:action="@{/login}">`                      |
-| th:with                              | 可变量进行赋值运算              | `<div th:with="value = 1 + 2"></div>`               |
+| 标签           | 用途                            | 例子                                                |
+| :------------- | ------------------------------- | --------------------------------------------------- |
+| [th:id]()      | 替换当前标签的id属性            | `<div th:id="'divId' + ${id}"></div>`               |
+| [th:if]()      | 判断事件                        | `<div th:if="${value == 'right'}">show</div>`       |
+| [th:unless]()  | 判断事件[相当于else]            | `<div th:unless="${value == 'error'}">show</div>`   |
+| [th:each]()    | 循环事件                        | `<tr th:each="value : ${list}"><td>value</td></tr>` |
+| [th:text]()    | 替换标签内容                    | `<div th:text="${text}">none</div>`                 |
+| [th:utext]()   | 替换标签内容，支持html的文本    | `<div th:utext="${text}">none</div>`                |
+| [th:value]()   | 替换标签value属性               | `<input th:value="${value}"/>`                      |
+| [th:style]()   | 设置标签样式                    | `<div th:style="'color:'+${value}">none</div>`      |
+| [th:onclick]() | 设置标签点击事件                | `<div th:onclick="'func('+${value}+')'">none</div>` |
+| [th:href]()    | 设置标签链接                    | `<a th:href="'www.'+${value}"+'.com'>none</a>`      |
+| [th:switch]()  | 分支判断，需要与th:case配合使用 | `<div th:switch="${value}"></div>`                  |
+| [th:case]()    | th:switch的分支                 | `<span th:case="'right'">none</span>`               |
+| th:src         | 设置img标签的图片路径           | `<img th:src="'./fold/'+${value}"/>`                |
+| th:action      | 替换表单的action属性            | `<form th:action="@{/login}">`                      |
+| th:with        | 可变量进行赋值运算              | `<div th:with="value = 1 + 2"></div>`               |
 
  ## 常用标签的用法
 
@@ -316,7 +316,7 @@
 
    其实在方法写个**形参**[*一般为**String**类型*]，然后再类型前面加个注释**@RequestParam**，这个就是后端接收前端里**name**属性值为**value**[*属性**值***]的标签里**value**[*属性**名***]的值
 
-   *如果不想以变量名作为前端的name的属性值，可以使用**@RequestParam(value="name属性值")***
+   *如果不想以变量名作为前端的name的属性值，可以使用@RequestParam(value="name属性值")*
 
    ```java
    @RequestMapping("/submitTest5")
@@ -486,6 +486,8 @@
 | #numbers   | 处理数字格式化的方法             |
 | #sets      | 处理set集合的方法                |
 | #strings   | 处理字符串的方法                 |
+
+*每个变量的方法都特别多，不方便做教程，但是根据方法的名字还是能知道它有什么用*
 
 # demo
 
