@@ -1,0 +1,134 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        user-select: none;
+    }
+    body{
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .content {
+        width: 350px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px #ccc;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    div {
+        margin: 10px 0;
+    }
+
+    label {
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+    }
+
+    input {
+        padding: 5px;
+        width: 200px;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .language{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    .language select{
+        width: 80px;
+        height: 30px;
+    }
+    .info{
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #131313;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        background-color: #f1f1f1;
+    }
+    .tips{
+        color: darkred;
+    }
+</style>
+<body>
+    <div class="info">
+        <div>
+            <span th:text="#{currentTime}"/>：<span th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"/>
+        </div>
+        <div th:if="${session.user != null}">
+            <span th:text="#{currentInfo}"/>：<br>
+            <span th:text="#{label.username}"/>：<span th:text="${session.user.username}"/>
+            <button class="btn" th:text="#{logout}"/>
+            <script>
+
+            </script>
+        </div>
+    </div>
+
+    <div class="content">
+        <h2 th:text="#{login}"/>
+        <form action="/login" method="post">
+            <div>
+                <label for="username"><span th:text="#{label.username}"/>：</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div>
+                <label for="password"><span th:text="#{label.password}"/>：</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="tips">
+                <span th:if="${session.tips != null && session.tips == 'PASSWORD_ERROR'}" th:text="#{tips.password_error}"/>
+                <span th:if="${session.tips != null && session.tips == 'USER_EXIST'}" th:text="#{tips.user_error}"/>
+                <span th:if="${session.tips != null && session.tips == 'USER_OR_PASSWORD_EMPTY'}" th:text="#{tips.empty}"/>
+            </div>
+            <div>
+                <input type="submit" th:value="#{login}">
+            </div>
+        </form>
+    </div>
+    <div class="language">
+        <span th:text="#{language}"/>
+        <select>
+            <option hidden th:value="${session.lang}" th:text="${session.lang == 'en_US'?'English':(session.lang == 'zh_CN'?'中文':'日本語')}"></option>
+            <option value="zh_CN">中文</option>
+            <option value="en_US">English</option>
+            <option value="ja_JP">日语</option>
+        </select>
+    </div>
+    <script>
+        //检测选择框被切换值
+        document.querySelector('.language').addEventListener('change', function (e) {
+            let value = e.target.value;
+            window.location.href = "/toLoginPage?lang="+value;
+        });
+    </script>
+</body>
+</html>
